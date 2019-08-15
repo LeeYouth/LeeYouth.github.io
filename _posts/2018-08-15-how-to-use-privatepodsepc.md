@@ -1,14 +1,21 @@
 ---
 layout: post
-title: 私人pod库的使用
+title: pod私有库的提交以及使用
 categories: CocoaPods
 description: 使用私人pod库需要注意的几个点。
 keywords: CocoaPods, podsepc
 ---
 
-###私人pod库的使用
+pod私有库库的提交使用一下代码，记得每次提交tag版本
 
-@(Flutter学习)
+```
+git add .
+git commit -m"first commit"
+git remote add origin https://git.coding.net/one_fools/OFPublicTool.git
+git push origin master
+git tag -m"tag 0.1.0" 0.1.0
+git push --tags
+```
 
 使用私人pod库的需要在Podflie中添加这句话，指明你的版本库地址。
 ```
@@ -46,3 +53,6 @@ end
 ```
 pod install
 ```
+
+
+
