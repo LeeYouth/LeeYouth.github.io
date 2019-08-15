@@ -54,17 +54,12 @@ subscribe_rss: /feed.xml
 # ---------------- #
 #      Jekyll      #
 # ---------------- #
-#markdown: kramdown
-#kramdown:
- #   input: GFM
-
-#highlighter: rouge
-
 markdown: kramdown
 kramdown:
-  syntax_highlighter_opts:
-    disable: true
-highlightjs: true
+    input: GFM
+
+highlighter: rouge
+
 
 paginate: 10
 lsi: false
