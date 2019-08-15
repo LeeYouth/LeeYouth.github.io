@@ -20,7 +20,7 @@
 }
 
 .home .site-header .site-header-nav-item {
-    color: #2E2F29
+    color: rgba(255, 255, 255, .5)
 }
 
 .home .site-header .site-header-nav-item:hover {
@@ -37,3 +37,6 @@
     font-size: 1.25em;
   }
 }
+
+pre[class='highlight'] {background-color:#272822;}
+pre[class='highlight'] {font-size: 1em;}
