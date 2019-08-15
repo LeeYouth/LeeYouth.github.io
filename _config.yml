@@ -58,8 +58,7 @@ markdown: kramdown
 kramdown:
     input: GFM
     syntax_highlighter: rouge
-    hard_wrap: false
-
+    use_coderay: true
 highlighter: rouge
 paginate: 10
 lsi: false
