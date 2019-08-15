@@ -1,3 +1,11 @@
+---
+layout: post
+title: 私人pod库的使用
+categories: CocoaPods
+description: 使用私人pod库需要注意的几个点。
+keywords: CocoaPods, podsepc
+---
+
 ###私人pod库的使用
 
 @(Flutter学习)
