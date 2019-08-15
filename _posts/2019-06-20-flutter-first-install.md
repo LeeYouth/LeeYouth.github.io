@@ -7,7 +7,6 @@ description: Flutter首次安装环境变量配置
 keywords: Flutter, Flutter Install
 ---
 
-
 Flutter首次安装环境变量配置。将Flutter代码中bin文件目录添加到系统环境变量中，这里和java环境配置大同小异，mac端具体操作如下：
 
 ```
