@@ -1,18 +1,18 @@
 ---
 layout: page
 title: About
-description: 打码改变世界
-keywords: Zhuang Ma, 马壮
+description: Winter is comming
+keywords: LYoung, 立永
 comments: true
 menu: 关于
 permalink: /about/
 ---
 
-我是马壮，码而生，码而立。
+In the end,
 
-仰慕「优雅编码的艺术」。
+it’s not the years in your life that count.
 
-坚信熟能生巧，努力改变人生。
+It’s the life in your years.
 
 ## 联系
 
