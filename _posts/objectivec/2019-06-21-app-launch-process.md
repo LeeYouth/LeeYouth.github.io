@@ -4,22 +4,24 @@ title: iOS APP的生命流程
 categories: Objective-C
 description: iOS APP的生命流程
 keywords: Objective-C, OC, iOS
+date:   2018-03-31 02:36:26 +0800
 ---
 
 
 #### iOS APP的生命流程
 
-当自己对技术对APP的性能达到一定的追求时，就需要对APP有较深的了解，越是深入的了解和理解才能从各个点上去优化性能。深入的理解还可以使我们在对iOS进行逆向工程时更加了解从哪一个时间段什么方式入侵最合适。
-我把APP的生命流程分为三大部分:
-1.APP的启动流程(pre-main)
-2.APP的初始化流程(main)
-3.APP的运行时生命周期
-APP的启动流程
-* 1.iOS系统首先会加载解析该APP的Info.plist文件，因为Info.plist文件中包含了支持APP加载运行所需要的众多Key，value配置信息，例如APP的运行条件(Required device capabilities)，是否全屏，APP启动图信息等。
-* 2.创建沙盒(iOS8后，每次启动APP都会生成一个新的沙盒路径)
-* 3.根据Info.plist的配置检查相应权限状态
-* 4.加载Mach-O文件读取dyld路径并运行dyld动态连接器(内核加载了主程序，dyld只会负责动态库的加载)
-* 4.1 首先dyld会寻找合适的CPU运行环境
+> 当自己对技术对APP的性能达到一定的追求时，就需要对APP有较深的了解，越是深入的了解和理解才能从各个点上去优化性能。深入的理解还可以使我们在对iOS进行逆向工程时更加了解从哪一个时间段什么方式入侵最合适。
+我把APP的生命流程分为**三大部分**:
+1. APP的启动流程(pre-main)
+2. APP的初始化流程(main)
+3. APP的运行时生命周期
+-----
+- **APP的启动流程**
+*   1.iOS系统首先会加载解析该APP的Info.plist文件，因为Info.plist文件中包含了支持APP加载运行所需要的众多Key，value配置信息，例如APP的运行条件(Required device capabilities)，是否全屏，APP启动图信息等。
+*    2.创建沙盒(iOS8后，每次启动APP都会生成一个新的沙盒路径)
+*    3.根据Info.plist的配置检查相应权限状态
+*    4.加载Mach-O文件读取dyld路径并运行dyld动态连接器(内核加载了主程序，dyld只会负责动态库的加载)
+*    4.1 首先dyld会寻找合适的CPU运行环境
 * 4.2 然后加载程序运行所需的依赖库和我们自己写的.h.m文件编译成的.o可执行文件，并对这些库进行链接。
 * 4.3 加载所有方法(runtime就是在这个时候被初始化的)
 * 4.4 加载C函数
@@ -53,7 +55,7 @@ APP的初始化流程
 在application:didFinishLaunchingWithOptions:中创建UIWindow
 创建和设置UIWindow的rootViewController
 5. 最终显示第一个窗口
-* 3.+load的调用时机与规则
+* 3.'+load'的调用时机与规则
 当类被程序引用的时候就会调用类的+load方法，当程序启动时，会加载相关Mach-O文件，这个时候就会查找项目中那些文件被引用，这个时候就会调用+load。
 1.当父类和子类都实现+load方法时,父类+load方法的执行顺序要优先于子类执行
 2.当子类未实现+load方法时,不会调用父类+load方法
