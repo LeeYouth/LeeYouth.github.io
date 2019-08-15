@@ -57,8 +57,6 @@ subscribe_rss: /feed.xml
 markdown: kramdown
 kramdown:
     input: GFM
-    syntax_highlighter: rouge
-    use_coderay: true
 highlighter: rouge
 paginate: 10
 lsi: false
