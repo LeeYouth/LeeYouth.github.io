@@ -8,7 +8,7 @@ keywords: CocoaPods, podsepc
 
 pod私有库库的提交使用一下代码，记得每次提交tag版本
 
-```
+``` objectivec
 git add .
 git commit -m"first commit"
 git remote add origin https://git.coding.net/one_fools/OFPublicTool.git
@@ -18,24 +18,24 @@ git push --tags
 ```
 
 使用私人pod库的需要在Podflie中添加这句话，指明你的版本库地址。
-```
+``` objectivec
 source ‘https://git.oschina.net/baiyingqiu/MyRepo.git’
 ```
 
 注意是版本库的地址，而不是代码库的地址，很多教程都把我搞晕了~
 若有还使用了公有的pod库，需要把公有库地址也带上
-```
+``` objectivec
 source 'https://github.com/CocoaPods/Specs.git'
 ```
 
 
 最后的Podflie文件变成这个样子
-```
+``` objectivec
 source ‘https://github.com/CocoaPods/Specs.git’
 source ‘https://git.oschina.net/baiyingqiu/MyRepo.git’
 ```
 
-```
+``` objectivec
 
 platform :ios, '8.0'
 
@@ -50,7 +50,7 @@ end
 ```
 
 测试：
-```
+``` objectivec
 pod install
 ```
 
