@@ -64,6 +64,7 @@ markdown: kramdown
 kramdown:
   syntax_highlighter_opts:
     disable: true
+highlightjs: true
 
 paginate: 10
 lsi: false
