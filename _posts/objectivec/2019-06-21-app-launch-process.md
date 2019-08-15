@@ -6,6 +6,9 @@ description: iOS APP的生命流程
 keywords: Objective-C, OC, iOS
 ---
 
+
+#### iOS APP的生命流程
+
 当自己对技术对APP的性能达到一定的追求时，就需要对APP有较深的了解，越是深入的了解和理解才能从各个点上去优化性能。深入的理解还可以使我们在对iOS进行逆向工程时更加了解从哪一个时间段什么方式入侵最合适。
 我把APP的生命流程分为三大部分:
 1.APP的启动流程(pre-main)
