@@ -48,7 +48,7 @@
     width: 6px;
     height: 6px;
     margin-left: -4px;
-    background: #2E2F29;
+    background: #bbb;
     border-radius: 50%;
     border: 1px solid #fff;
     transition-duration: 0.2s;
@@ -89,7 +89,7 @@
     display: block;
     padding: 10px 15px;
     margin-bottom: -1px;
-    background-color: #2E2F29;
+    background-color: #fff;
     border: 1px solid #ddd;
 }
 
@@ -120,6 +120,6 @@
     text-align: center;
     white-space: nowrap;
     vertical-align: middle;
-    background-color: #2E2F29;
+    background-color: #777;
     border-radius: 10px;
 }
