@@ -9,7 +9,8 @@ keywords: Flutter, Flutter Install
 Flutter首次安装环境变量配置。
 将Flutter代码中bin文件目录添加到系统环境变量中，这里和java环境配置大同小异，mac端具体操作如下：
 
-```
+``` ruby
+
 第一步：
 cd ~           // 在终端进入用户目录，一般打开终端默认就是
 
