@@ -1,0 +1,213 @@
+<!DOCTYPE html><html><head><title>移动网关（TMFShark）iOS</title><meta charset='utf-8'><link href='https://cdn.maxiang.io/res-min/themes/marxico.css' rel='stylesheet'><style></style></head><body><div id='preview-contents' class='note-content'>
+                        
+                    
+
+
+
+<h1 id="移动网关tmfsharkios">移动网关（TMFShark）iOS</h1>
+
+<hr>
+
+<p><em>腾讯云移动金融开发平台 用户手册 移动网关 iOS v1.4.pdf</em></p>
+
+<hr>
+
+<div><div class="toc"><div class="toc">
+<ul>
+<li><a href="#移动网关tmfsharkios">移动网关（TMFShark）iOS</a><ul>
+<li><ul>
+<li><ul>
+<li><a href="#appdelegate中初始化sharkcenter">AppDelegate中初始化SharkCenter</a></li>
+<li><a href="#tmfsharkcenter单例">TMFSharkCenter单例</a></li>
+<li><a href="#获取guid">获取GUID</a></li>
+<li><a href="#异步获取vid">异步获取VID</a></li>
+<li><a href="#可设置的cmdsettings">可设置的CmdSettings</a></li>
+<li><a href="#网关请求">网关请求</a></li>
+<li><a href="#请求取消">请求取消</a></li>
+<li><a href="#上报用户信息">上报用户信息</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+<ul><li><h4 id="appdelegate中初始化sharkcenter">AppDelegate中初始化SharkCenter</h4></li>
+</ul>
+
+
+
+<pre class="prettyprint hljs-dark"><code class="language-objectivec hljs"><div class="hljs-line"><span class="hljs-meta">#pragma mark - Shark</span>
+</div><div class="hljs-line"><wbr>
+</div><div class="hljs-line">- (<span class="hljs-keyword">void</span>)initSharkCenter
+</div><div class="hljs-line">{
+</div><div class="hljs-line">    <span class="hljs-comment">/** 调试日志 **/</span>
+</div><div class="hljs-line">    [TMFSharkCenterConfiguration setLogLevels:<span class="hljs-number">1</span>];
+</div><div class="hljs-line"><wbr>
+</div><div class="hljs-line">    <span class="hljs-comment">/** 初始化 Shark 的配置 **/</span>
+</div><div class="hljs-line"><wbr>
+</div><div class="hljs-line">    [TMFSharkCenterConfiguration setLogLevels:<span class="hljs-number">1</span>];
+</div><div class="hljs-line"><wbr>
+</div><div class="hljs-line">    TMFSharkCenterConfiguration *masterConfiguration = [TMFSharkCenterConfiguration masterConfiguration];
+</div><div class="hljs-line"><wbr>
+</div><div class="hljs-line">    masterConfiguration.productKey = TMF_APP_KEY;
+</div><div class="hljs-line">    masterConfiguration.productID = TMF_PID;
+</div><div class="hljs-line">    masterConfiguration.buildVersion = [[<span class="hljs-built_in">NSBundle</span> mainBundle] objectForInfoDictionaryKey:<span class="hljs-string">@"CFBundleShortVersionString"</span>];
+</div><div class="hljs-line">    masterConfiguration.buildNumber = [[<span class="hljs-built_in">NSBundle</span> mainBundle] objectForInfoDictionaryKey:(<span class="hljs-built_in">NSString</span> *)kCFBundleVersionKey];
+</div><div class="hljs-line"><wbr>
+</div><div class="hljs-line">    masterConfiguration.HTTPURL = TMF_GW_HTTP_URL;
+</div><div class="hljs-line">    masterConfiguration.RSAPublicKey = TMF_GW_RKEY;
+</div><div class="hljs-line">    masterConfiguration.SM2PublicKey = TMF_GW_SKEY;
+</div><div class="hljs-line"><wbr>
+</div><div class="hljs-line">    masterConfiguration.customerID = TMF_CUSTOM_ID;
+</div><div class="hljs-line">    masterConfiguration.keychainAccessGroup = <span class="hljs-string">@"7Y79ESXG99.com.tencent.tmf.shared"</span>;
+</div><div class="hljs-line"><wbr>
+</div><div class="hljs-line"><span class="hljs-meta">#warning TMFSharkDemoUserConfiguration is only for demo and test, please do not import to an official project</span>
+</div><div class="hljs-line">    <span class="hljs-comment">// 注意：</span>
+</div><div class="hljs-line">    <span class="hljs-comment">//  以下与 `TMFSharkDemoUserConfiguration` 相关的代码，只是为了 demo 设置 Shark 服务器地址，</span>
+</div><div class="hljs-line">    <span class="hljs-comment">//  实际项目中不应该引入这部分代码</span>
+</div><div class="hljs-line">    masterConfiguration.productKey = TMFSharkDemoUserConfiguration.u_productKey;
+</div><div class="hljs-line">    masterConfiguration.productID = [TMFSharkDemoUserConfiguration.u_productIDString integerValue];
+</div><div class="hljs-line">    masterConfiguration.HTTPURL = TMFSharkDemoUserConfiguration.u_HTTPURL;
+</div><div class="hljs-line">    masterConfiguration.RSAPublicKey = TMFSharkDemoUserConfiguration.u_publicKey;
+</div><div class="hljs-line"><wbr>
+</div><div class="hljs-line"><wbr>
+</div><div class="hljs-line"><wbr>
+</div><div class="hljs-line">    <span class="hljs-comment">/** 初始化 Shark Center，如果是首次初始化，则会联网向服务端请求 GUID **/</span>
+</div><div class="hljs-line"><wbr>
+</div><div class="hljs-line">    [[TMFSharkCenter masterCenter] initialize];
+</div><div class="hljs-line">    <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@"GUID: %@"</span>, [TMFSharkCenter masterCenter].GUID);
+</div><div class="hljs-line">}
+</div></code></pre>
+
+<ul><li><h4 id="tmfsharkcenter单例"><strong>TMFSharkCenter单例</strong></h4></li>
+</ul>
+
+
+
+<pre class="prettyprint hljs-dark"><code class="language-objectivec hljs"><div class="hljs-line">    TMFSharkCenter *center = [TMFSharkCenter masterCenter];
+</div><div class="hljs-line">    TMFSharkCenterConfiguration *configuration = center.configuration; 
+</div></code></pre>
+
+<ul><li><h4 id="获取guid"><strong>获取GUID</strong></h4></li>
+</ul>
+
+
+
+<pre class="prettyprint hljs-dark"><code class="language-objectivec hljs"><div class="hljs-line">    <span class="hljs-built_in">NSString</span> *GUID = [TMFSharkCenter masterCenter].GUID;
+</div></code></pre>
+
+<ul><li><h4 id="异步获取vid"><strong>异步获取VID</strong></h4></li>
+</ul>
+
+
+
+<pre class="prettyprint hljs-dark"><code class="language-objectivec hljs"><div class="hljs-line">    [[TMFSharkCenter masterCenter] fetchVID:^(<span class="hljs-built_in">NSString</span> * _Nullable VID, <span class="hljs-built_in">NSError</span> * _Nullable error) {
+</div><div class="hljs-line"><wbr>
+</div><div class="hljs-line">        <span class="hljs-keyword">if</span> (VID) {
+</div><div class="hljs-line">        <span class="hljs-comment">//获取成功</span>
+</div><div class="hljs-line">        } <span class="hljs-keyword">else</span> {
+</div><div class="hljs-line">        <span class="hljs-comment">//获取失败</span>
+</div><div class="hljs-line">        }
+</div><div class="hljs-line">    }];
+</div></code></pre>
+
+<ul><li><h4 id="可设置的cmdsettings"><strong>可设置的CmdSettings</strong></h4></li>
+</ul>
+
+
+
+<pre class="prettyprint hljs-dark"><code class="language-objectivec hljs"><div class="hljs-line"> <span class="hljs-built_in">NSString</span> *u_productKey;
+</div><div class="hljs-line"> <span class="hljs-built_in">NSString</span> *u_productIDString;
+</div><div class="hljs-line"> <span class="hljs-built_in">NSString</span> *u_HTTPURL;
+</div><div class="hljs-line"> <span class="hljs-built_in">NSString</span> *u_publicKey;
+</div><div class="hljs-line"><wbr>
+</div><div class="hljs-line"> <span class="hljs-built_in">NSString</span> *u_cmd;
+</div><div class="hljs-line"> <span class="hljs-built_in">NSString</span> *u_cmdIDString;
+</div><div class="hljs-line"> <span class="hljs-built_in">NSString</span> *u_requestHeadersJSONString;
+</div><div class="hljs-line"> <span class="hljs-built_in">NSString</span> *u_requestCookiesJSONString;
+</div><div class="hljs-line"> <span class="hljs-built_in">NSString</span> *u_requestQueriesString;
+</div><div class="hljs-line"> <span class="hljs-built_in">NSString</span> *u_requestDataString;
+</div></code></pre>
+
+<table><tbody><tr style="font-weight:bold">  <td align="left">参数名称</td>  <td align="right">参数类型</td>  <td align="center">参数描述</td>  <td>必填</td></tr><tr>  <td align="left">productKey</td>  <td align="right">NSString</td>  <td align="center">产品唯一标识 需要申请</td>  <td>Y</td></tr><tr>  <td align="left">productID</td>  <td align="right">1600 USD</td>  <td align="center">产品 ID 需要申请</td>  <td>Y</td></tr><tr>  <td align="left">buildVersion</td>  <td align="right">NSString</td>  <td align="center">Shark 版本 eg. 1.0</td>  <td>Y</td></tr><tr>  <td align="left">buildNumber</td>  <td align="right">NSString</td>  <td align="center">Shark 版本号 eg. 1000</td>  <td>Y</td></tr><tr>  <td align="left">HTTPURL</td>  <td align="right">NSString</td>  <td align="center">服务器地址，用于接受 Shark 请求</td>  <td>Y</td></tr><tr>  <td align="left">RSAPublicKey</td>  <td align="right">NSString</td>  <td align="center">公用 RSA key</td>  <td>Y</td></tr></tbody></table>
+
+<ul><li><h4 id="网关请求"><strong>网关请求</strong></h4></li>
+</ul>
+
+
+
+<pre class="prettyprint hljs-dark"><code class="language-objectivec hljs"><div class="hljs-line">    <span class="hljs-comment">// cmd Settings</span>
+</div><div class="hljs-line">TMFOCSharkCmdSettings *cmdSettings = [TMFOCSharkCmdSettings settings];
+</div><div class="hljs-line">    cmdSettings.cmd = TMFSharkDemoUserConfiguration.u_cmd;
+</div><div class="hljs-line">    [cmdSettings csSetCmdID:[TMFSharkDemoUserConfiguration.u_cmdIDString integerValue] objectClass:Nil];
+</div><div class="hljs-line"><wbr>
+</div><div class="hljs-line">    <span class="hljs-comment">// Request Header</span>
+</div><div class="hljs-line">    TMFSharkRequestHeaders *requestHeaders = [TMFSharkRequestHeaders headers];
+</div><div class="hljs-line">    <span class="hljs-keyword">if</span> (TMFSharkDemoUserConfiguration.u_requestHeadersJSONString) {
+</div><div class="hljs-line">        <span class="hljs-built_in">NSData</span> *data = [TMFSharkDemoUserConfiguration.u_requestHeadersJSONString dataUsingEncoding:<span class="hljs-built_in">NSUTF8StringEncoding</span>];
+</div><div class="hljs-line">        <span class="hljs-built_in">NSDictionary</span> *dict = [<span class="hljs-built_in">NSJSONSerialization</span> JSONObjectWithData:data options:kNilOptions error:<span class="hljs-literal">NULL</span>];
+</div><div class="hljs-line">        <span class="hljs-keyword">if</span> ([dict isKindOfClass:[<span class="hljs-built_in">NSDictionary</span> <span class="hljs-keyword">class</span>]]) {
+</div><div class="hljs-line">            [requestHeaders.headers setValuesForKeysWithDictionary:dict];
+</div><div class="hljs-line">        }
+</div><div class="hljs-line">    }
+</div><div class="hljs-line">    <span class="hljs-keyword">if</span> (TMFSharkDemoUserConfiguration.u_requestCookiesJSONString) {
+</div><div class="hljs-line">        <span class="hljs-built_in">NSData</span> *data = [TMFSharkDemoUserConfiguration.u_requestCookiesJSONString dataUsingEncoding:<span class="hljs-built_in">NSUTF8StringEncoding</span>];
+</div><div class="hljs-line">        <span class="hljs-built_in">NSDictionary</span> *dict = [<span class="hljs-built_in">NSJSONSerialization</span> JSONObjectWithData:data options:kNilOptions error:<span class="hljs-literal">NULL</span>];
+</div><div class="hljs-line">        <span class="hljs-keyword">if</span> ([dict isKindOfClass:[<span class="hljs-built_in">NSDictionary</span> <span class="hljs-keyword">class</span>]]) {
+</div><div class="hljs-line">            [requestHeaders.cookies setValuesForKeysWithDictionary:dict];
+</div><div class="hljs-line">        }
+</div><div class="hljs-line">    }
+</div><div class="hljs-line">    <span class="hljs-keyword">if</span> (TMFSharkDemoUserConfiguration.u_requestQueriesString) {
+</div><div class="hljs-line">        <span class="hljs-built_in">NSURL</span> *URL = [<span class="hljs-built_in">NSURL</span> URLWithString:[<span class="hljs-string">@"tmf://shark?"</span> stringByAppendingString:TMFSharkDemoUserConfiguration.u_requestQueriesString]];
+</div><div class="hljs-line">        <span class="hljs-built_in">NSDictionary</span> *dict = [URL mqqQueryDictionary];
+</div><div class="hljs-line">        <span class="hljs-keyword">if</span> (dict) {
+</div><div class="hljs-line">            [requestHeaders.queries setValuesForKeysWithDictionary:dict];
+</div><div class="hljs-line">        }
+</div><div class="hljs-line">    }
+</div><div class="hljs-line"><wbr>
+</div><div class="hljs-line">    <span class="hljs-comment">// Request Data</span>
+</div><div class="hljs-line">    <span class="hljs-built_in">NSData</span> *requestData = [TMFSharkDemoUserConfiguration.u_requestDataString dataUsingEncoding:<span class="hljs-built_in">NSUTF8StringEncoding</span>];
+</div><div class="hljs-line"><wbr>
+</div><div class="hljs-line">      <span class="hljs-comment">// Request</span>
+</div><div class="hljs-line">    [[TMFSharkCenter masterCenter] requestWithCmdSettings:cmdSettings requestHeaders:requestHeaders requestData:requestData completionHandler:^(TMFSharkResponseHeaders * _Nullable responseHeaders, <span class="hljs-built_in">NSData</span> * _Nullable responseData, <span class="hljs-built_in">NSError</span> * _Nullable error) {
+</div><div class="hljs-line"><wbr>
+</div><div class="hljs-line">        <span class="hljs-built_in">NSString</span> *responseString = <span class="hljs-literal">nil</span>;
+</div><div class="hljs-line">        <span class="hljs-keyword">if</span> (responseData) {
+</div><div class="hljs-line">            responseString = [[<span class="hljs-built_in">NSString</span> alloc] initWithData:responseData encoding:<span class="hljs-built_in">NSUTF8StringEncoding</span>];
+</div><div class="hljs-line">        }
+</div><div class="hljs-line"><wbr>
+</div><div class="hljs-line">        <span class="hljs-built_in">UIAlertController</span> *alertController = <span class="hljs-literal">nil</span>;
+</div><div class="hljs-line">        <span class="hljs-keyword">if</span> (error == <span class="hljs-literal">nil</span>) {
+</div><div class="hljs-line">        <span class="hljs-comment">//请求成功返回数据</span>
+</div><div class="hljs-line">        } <span class="hljs-keyword">else</span> {
+</div><div class="hljs-line">        <span class="hljs-comment">//请求失败，报错</span>
+</div><div class="hljs-line">    }];
+</div><div class="hljs-line"><wbr>
+</div></code></pre>
+
+<ul><li><h4 id="请求取消"><strong>请求取消</strong></h4></li>
+</ul>
+
+
+
+<pre class="prettyprint hljs-dark"><code class="language-objectivec hljs"><div class="hljs-line">    <span class="hljs-comment">//Cancel Request</span>
+</div><div class="hljs-line">    <span class="hljs-built_in">dispatch_async</span>(dispatch_get_main_queue(), ^{
+</div><div class="hljs-line">        [[TMFSharkCenter masterCenter] cancelRequest:requestID];
+</div><div class="hljs-line">        <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@"Did cancel request, requestID: %lu"</span>, (<span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">long</span>)requestID);
+</div><div class="hljs-line">    });
+</div></code></pre>
+
+<ul><li><h4 id="上报用户信息"><strong>上报用户信息</strong></h4></li>
+</ul>
+
+
+
+<pre class="prettyprint hljs-dark"><code class="language-objectivec hljs"><div class="hljs-line">    <span class="hljs-comment">//上报中心用户信息上报扩展 用于上报用户信息</span>
+</div><div class="hljs-line">    <span class="hljs-built_in">NSString</span> *userID = <span class="hljs-string">@"x3dsw23lh"</span>;
+</div><div class="hljs-line">    [[TMFProfileReporter defaultReporter] updateCustomizedUserID:userID];
+</div></code></pre></div></body></html>
