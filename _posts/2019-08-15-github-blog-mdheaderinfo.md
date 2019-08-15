@@ -20,3 +20,8 @@ keywords: Flutter, Flutter Install
 ---
 
 ```
+
+- _posts 文件夹中是我已发布的博客文章。
+- _drafts 文件夹中是我尚未发布的博客文章。
+- _wiki 文件夹中是我已发布的 wiki 页面。
+- images 文件夹中是我的文章和页面里使用的图片。
