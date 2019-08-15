@@ -86,3 +86,6 @@
 body {
   font-size:2rem;
 }
+
+pre[class='highlight'] {background-color:#272822;}
+pre[class='highlight'] {font-size: 1em;}
