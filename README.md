@@ -1,6 +1,6 @@
 # 介绍
 
-我的个人博客：https://leeyouth.github.io/>
+我的个人博客：https://leeyouth.github.io
 
 ## 概览
 
