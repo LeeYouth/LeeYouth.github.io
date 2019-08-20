@@ -190,7 +190,7 @@ dispatch_queue_t queue = dispatch_get_global_queue(0, 0);
 dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
 ```
 
-```
+ ```
 __block int j = 0;
 dispatch_async(queue, ^{
 j = 100;
@@ -199,13 +199,14 @@ dispatch_semaphore_signal(semaphore);
 
 dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
 NSLog(@"finish j = %zd", j);
-```
+ ```
 结果输出 j ＝ 100；
 如果注掉dispatch_semaphore_wait这一行，则 j ＝ 0；
 >**注释：** 由于是将block异步添加到一个并行队列里面，所以程序在主线程跃过block直接到dispatch_semaphore_wait这一行，因为semaphore信号量为0，时间值为DISPATCH_TIME_FOREVER，所以当前线程会一直阻塞，直到block在子线程执行到dispatch_semaphore_signal，使信号量+1，此时semaphore信号量为1了，所以程序继续往下执行。这就保证了线程间同步了。
 
 - **dispatch_semaphore为线程加锁**
-```
+
+ ```
 dispatch_queue_t queue = dispatch_get_global_queue(0, 0);
 dispatch_semaphore_t semaphore = dispatch_semaphore_create(1);
 
@@ -218,7 +219,9 @@ NSLog(@"i = %zd semaphore = %@", i, semaphore);
 dispatch_semaphore_signal(semaphore);
 });
 }
-```
+
+ ```
+ 
 > **注释：** 当线程1执行到dispatch_semaphore_wait这一行时，semaphore的信号量为1，所以使信号量-1变为0，并且线程1继续往下执行；如果当在线程1NSLog这一行代码还没执行完的时候，又有线程2来访问，执行dispatch_semaphore_wait时由于此时信号量为0，且时间为DISPATCH_TIME_FOREVER,所以会一直阻塞线程2（此时线程2处于等待状态），直到线程1执行完NSLog并执行完dispatch_semaphore_signal使信号量为1后，线程2才能解除阻塞继续住下执行。以上可以保证同时只有一个线程执行NSLog这一行代码。
 
 #### 8.**runLoop机制？source0是什么？source1是什么？追问 事件响应时怎么通知runLoop的**
