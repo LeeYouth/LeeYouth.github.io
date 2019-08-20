@@ -246,7 +246,33 @@ Runloop做的是管理视图刷新频率，防止重复运算。由于视图更�
 
 ## 10.**KVO的实现原理**
 
-经过查阅资料我们可以了解到。 NSKVONotifyin_Person中的setage方法中其实调用了 Fundation框架中C语言函数 _NSsetIntValueAndNotify，_NSsetIntValueAndNotify内部做的操作相当于，首先调用willChangeValueForKey 将要改变方法，之后调用父类的setage方法对成员变量赋值，最后调用didChangeValueForKey已经改变方法。didChangeValueForKey中会调用监听器的监听方法，最终来到监听者的observeValueForKeyPath方法中。
+Apple 使用了 isa 混写（isa-swizzling）来实现 KVO 。当观察对象A时，KVO机制动态创建一个新的名为：NSKVONotifying_A 的新类，该类继承自对象A的本类，且 KVO 为 NSKVONotifying_A 重写观察属性的 setter 方法，setter 方法会负责在调用原 setter 方法之前和之后，通知所有观察对象属性值的更改情况。
+ NSKVONotifyin_Person中的setage方法中其实调用了 Fundation框架中C语言函数 _NSsetIntValueAndNotify，_NSsetIntValueAndNotify内部做的操作相当于，首先调用willChangeValueForKey 将要改变方法，之后调用父类的setage方法对成员变量赋值，最后调用didChangeValueForKey已经改变方法。didChangeValueForKey中会调用监听器的监听方法，最终来到监听者的observeValueForKeyPath方法中。
+ 
+ ```
+ +(BOOL)automaticallyNotifiesObserversForKey:(NSString *)key{
+ if ([key isEqualToString:@"name"]) {
+ return NO;
+ }else{
+ return [super automaticallyNotifiesObserversForKey:key];
+ }
+ }
+ 
+ ```
+ 
+ ```
+ -(void)setName:(NSString *)name{
+ 
+ if (_name!=name) {
+ 
+ [self willChangeValueForKey:@"name"];
+ _name=name;
+ [self didChangeValueForKey:@"name"];
+ }
+ 
+ }
+ 
+ ```
 
 ## 11.**字典的原理？追问重复的key是怎么排列的？取的时候是怎么取的?**
 一言以蔽之： 在OC中NSDictionary是使用hash表来实现key和value的映射和存储的。
