@@ -33,6 +33,7 @@ iOS APP启动流程与生命周期
 1.7 最后dyld返回main函数地址，main函数被调用
 
 **Mach-O文件说明:**
+
 Mach-O文件格式是 OS X 与 iOS 系统上的可执行文件格式，类似于windows的 PE 文件。想我们编译产生的.o文件、程序可执行文件和各种库等都是Mach-O文件。
 Mach-O文件主要有3部分组成：
 
@@ -41,11 +42,13 @@ Mach-O文件主要有3部分组成：
 3. Data： 每一个segment的具体数据都保存在这里，这里包含了具体的代码、数据等等。
 
 **安全**
+
 ASLR（Address Space Layout Randomization）：地址空间布局随机化，镜像会在随机的地址上加载。
 代码签名：为了在运行时验证 Mach-O 文件的签名，并不是每次重复的去读入整个文件，而是把文件每页内容都生成一个单独的加密散列值，并把值存储在 __LINKEDIT 中。这使得文件每页的内容都能及时被校验确并保不被篡改。而不是每个文件都做hash加密并做数字签名。
 如果要查看Mach-O文件可以用Mac OSX自带的otool工具,下面是一些常用的查看Mach-O文件命令
 
 **dyld说明:**
+
 `dyld`叫做动态链接器，主要的职责是完成各种库的连接。dyld是苹果用C++写的一个开源库，可以在苹果的git上直接查看源代码。
 当系统从xnu内核态把控制权转交给dyld变成用户态后dyld首先初始化程序环境，将可执行文件以及相应的系统依赖库与我们自己加入的库加载进内存中，生成对应的ImageLoader类对应的image对象(镜像文件)，对这些image进行链接，调用各image的初始化方法等等(注:这里多数情况都是采用的递归，从底向上的方法调用)，其中runtime就是在这个过程中被初始化的，这些事情大多数在dyld:_mian方法中被发生。
 
@@ -56,7 +59,7 @@ op2=>operation: _dyld_sart
 op3=>operation: dyld加载System framework以及一些dylib到内存
 op4=>operation: Objc runtime 初始化 注册dyld_register_image_state_change_handler
 op5=>operation: 在每次有新的镜像加入运行时的时候，进行回调执行 load_images将所有包含load方法的文件加入 loadable_classes
-op0->op1->op2->op3->op4->op5->cond
+op0->op1->op2->op3->op4->op5
 ```
 
 对于动态库和静态库的链接方式是不同的，详细的大家可以看看我另外一篇关于 [动态库与静态库的文章](https://www.jianshu.com/p/d643c1368c9d)
@@ -73,19 +76,21 @@ op0->op1->op2->op3->op4->op5->cond
 9. 内存上优化：类和方法名不要太长：iOS每个类和方法名都在__cstring段里都存了相应的字符串值，所以类和方法名的长短也是对可执行文件大小是有影响，及影响加载速度也消耗内存；因为OC的动态特性，都是加载后通过类/方法名反射找到这个类/方法进行调用，OC的对象模型会把类/方法名字符串都保存下来(压缩算法TinyPNG)。
 
 **冷启动、热启动**
+
 如果程序刚被运行过一次，那么程序的代码会被dyld缓存起来，因此即使杀掉进程再次重启加载时间也会相对快一点，如果长时间没有启动或者当前dyld的缓存已经被其他应用占据，那么这次启动所花费的时间就要长一点，这就分别是热启动和冷启动的概念。
 
 **启动时间测试方法**
+
 在 Xcode 中 Edit scheme -> Run -> Auguments 将环境变量 DYLD_PRINT_STATISTICS设为 1。随后启动APP时控制台会输出的启动耗时内容。
 
 #### APP的初始化流程
 
 1. main 函数
 2. 执行UIApplicationMain
-1.1 创建UIApplication对象
-1.2 创建UIApplication的delegate对象
-1.3 创建MainRunloop
-1.4 delegate对象开始处理(监听)系统事件(没有storyboard)
+1.  创建UIApplication对象
+2.  创建UIApplication的delegate对象
+3.  创建MainRunloop
+4.  delegate对象开始处理(监听)系统事件(没有storyboard)
 
 3. 根据Info.plist获得最主要storyboard的文件名,加载最主要的storyboard(有storyboard)
 4. 程序启动完毕的时候, 就会调用代理的application:didFinishLaunchingWithOptions:方法
