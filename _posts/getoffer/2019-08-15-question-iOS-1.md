@@ -293,6 +293,14 @@ setNeedsDisplay会调用自动调用drawRect方法
 
 
 
+----
+## 参考文章
+- [深入理解 iOS 开发中的锁](https://bestswifter.com/ios-lock/#osspinlock)
+- [CPU-内核态和用户态](https://www.jianshu.com/p/3bb1cdd44ef0)
+- [2019 iOS面试题-----Block原理、Block变量截获、Block的三种形式、__block](https://www.jianshu.com/p/0e1a0e7e988d)
+
+
+
 
 
 
