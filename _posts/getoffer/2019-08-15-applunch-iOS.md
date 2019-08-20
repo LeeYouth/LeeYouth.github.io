@@ -2,7 +2,7 @@
 layout: post
 title: iOS APP启动流程与生命周期
 categories: iOS
-description:iOS APP启动流程与生命周期
+description: iOS APP启动流程与生命周期
 keywords: iOS, APP启动
 ---
 
@@ -12,7 +12,7 @@ iOS APP启动流程与生命周期
 
 
 > 前言
-当自己对技术对APP的性能达到一定的追求时，就需要对APP有较深的了解，越是深入的了解和理解才能从各个点上去优化性能。深入的理解还可以使我们在对iOS进行逆向工程时更加了解从哪一个时间段什么方式入侵最合适。
+> 当自己对技术对APP的性能达到一定的追求时，就需要对APP有较深的了解，越是深入的了解和理解才能从各个点上去优化性能。深入的理解还可以使我们在对iOS进行逆向工程时更加了解从哪一个时间段什么方式入侵最合适。
 我把APP的生命流程分为三大部分:
 1. APP的启动流程(`pre-main`)
 2. APP的初始化流程(`main`)
@@ -250,6 +250,7 @@ NSLog(@"%s", __func__);
 ```
 
 ----
+
 ##### 补充：+load与+initialize
 
 -  **+load的调用时机与规则**
@@ -267,6 +268,7 @@ NSLog(@"%s", __func__);
 3. 当有多个Category都实现了initialize方法,会覆盖类中的方法,只执行一个(会执行Compile Sources 列表中最后一个Category 的initialize方法，因为覆盖的原因，所以最后一个覆盖了前面的)
 
 ----
+
 ##### 参考文章
 [iOS-APP的启动流程和生命周期](https://www.jianshu.com/p/229dd6190b95)
 
