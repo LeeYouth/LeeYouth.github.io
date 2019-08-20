@@ -9,9 +9,9 @@ keywords: iOS, 面试题
 
 2019 iOS面试题集合(一)
 
-#### 1. **iOS有哪几种锁？比较各种锁的优缺点？并给出实例场景判断用哪种锁**
+## 1. **iOS有哪几种锁？比较各种锁的优缺点？并给出实例场景判断用哪种锁**
 推荐博客--[深入理解 iOS 开发中的锁](https://bestswifter.com/ios-lock/#osspinlock)
-#### 2. **内核态和用户态？写的代码在哪上面？**
+## 2. **内核态和用户态？写的代码在哪上面？**
 **内核态**：CPU可以访问内存的所有数据，包括外围设备，例如硬盘，网卡，CPU也可以将自己从一个程序切换到另一个程序。
 **用户态**：只能受限的访问内存，且不允许访问外围设备，占用CPU的能力被剥夺，CPU资源可以被其他程序获取。
 
@@ -69,9 +69,10 @@ keywords: iOS, 面试题
 
 3. 将先前由中断向量检索得到的中断处理程序的cs,eip信息装入相应的寄存器，开始执行中断处理程序，这时就转到了内核态的程序执行了。
 
-#### 3.**内存管理机制**
+## 3.**内存管理机制**
 推荐唐巧博客--[理解iOS的内存管理](https://blog.devtang.com/2016/07/30/ios-memory-management/)
-#### 4.**block有几种？为什么__block修饰的值在内部可以改变？**
+
+## 4.**block有几种？为什么__block修饰的值在内部可以改变？**
 **block有三种类型：**
 - 全局块(_NSConcreteGlobalBlock)--不使用外部变量的block是全局block
 比如：
@@ -126,7 +127,7 @@ __NSGlobalBlock__
 * 栈块存在于栈内存中, 超出其作用域则马上被销毁
 * 堆块存在于堆内存中, 是一个带引用计数的对象, 需要自行管理其内存
 
-#### 5.**copy与strong修饰符**
+## 5.**copy与strong修饰符**
 copy修饰的NSString,在初始化时,如果来源是NSMutableString的话,会对来源进行一次深拷贝,将来源的内存地址复制一份,这样,两个对象就一点关系就没有了,无论你怎么操作来源,都不会对自己的NSString有任何影响。
 
 比如:
@@ -146,7 +147,7 @@ if ([str isMemberOfClass:[str class]])
 
 **那么回到最初的问题,什么时候用copy,什么时候用strong**
 你只需要记住一点,当你给你的的NSString对象赋值时,如果来源是NSMutableString,那么这种情况就必须要用copy;如果你确定来源是不可变类型的,比如@"abc_url"这种固定的字符串,那么用strong比较好。
-#### 6.**多线程有哪几种？GCD和NSOperation有什么区别？信号量了解过吗，dispatch_once的原理？**
+## 6.**多线程有哪几种？GCD和NSOperation有什么区别？信号量了解过吗，dispatch_once的原理？**
 - **多线程的原理**
 同一时间，CPU只能处理一条线程，只有一条线程在工作(执行)，多线程并发(同时)执行，其实是CPU快速的在多条线程之间调度(切换),如果CPU调度线程的时间足够快，就造成了多线程并发执行的假象。思考：如果线程足够多，CPU会在N多条线程之间调度，CPU会累死，消耗大量的CPU资源每条线程被调度的频率会降低(线程的执行效率降低)。
 - **多线程的优点**
@@ -224,7 +225,7 @@ dispatch_semaphore_signal(semaphore);
  
 > **注释：** 当线程1执行到dispatch_semaphore_wait这一行时，semaphore的信号量为1，所以使信号量-1变为0，并且线程1继续往下执行；如果当在线程1NSLog这一行代码还没执行完的时候，又有线程2来访问，执行dispatch_semaphore_wait时由于此时信号量为0，且时间为DISPATCH_TIME_FOREVER,所以会一直阻塞线程2（此时线程2处于等待状态），直到线程1执行完NSLog并执行完dispatch_semaphore_signal使信号量为1后，线程2才能解除阻塞继续住下执行。以上可以保证同时只有一个线程执行NSLog这一行代码。
 
-#### 8.**runLoop机制？source0是什么？source1是什么？追问 事件响应时怎么通知runLoop的**
+## 8.**runLoop机制？source0是什么？source1是什么？追问 事件响应时怎么通知runLoop的**
 RunLoop是一个do-while 循环，又不是一个do-while 循环。他的工作模式是一个循环，但是他基于mach_port和mach_msg的 休眠\唤醒 机制确保了他可以在无任务的时候休眠，有任务的时候及时唤醒，相比于一个普通循环，不会空转，不会浪费系统资源。RunLoop又通过不同的工作mode隔离了不同的事件源，使他们的工作互不影响。这才是RunLoop实现省电，流畅，响应速度快，用户体验好的根本原因；进而基于RunLoop的组件如计时器、GCD、界面更新、自动释放池能高效运转的根本原因。
 * **为什么引入Runloop机制，有什么作用或者好处？**
 引入Runloop机制的目的是利用RunLoop机制的特点实现整体省电的效果，并且让系统和应用可以流畅的运行，提高响应速度，达到极致的用户体验。
@@ -243,16 +244,16 @@ Runloop做的是管理视图刷新频率，防止重复运算。由于视图更�
 * **如何提高响应速度？**
 当发生系统事件时，如触碰事件，系统通过Mach Port 发送 Mach消息主动唤醒Runloop。Mach是抢占式操作系统内核，Mach系统IPC机制就是依靠消息机制实现的，所以效率非常高。
 
-#### 10.**KVO的实现原理**
+## 10.**KVO的实现原理**
 
 经过查阅资料我们可以了解到。 NSKVONotifyin_Person中的setage方法中其实调用了 Fundation框架中C语言函数 _NSsetIntValueAndNotify，_NSsetIntValueAndNotify内部做的操作相当于，首先调用willChangeValueForKey 将要改变方法，之后调用父类的setage方法对成员变量赋值，最后调用didChangeValueForKey已经改变方法。didChangeValueForKey中会调用监听器的监听方法，最终来到监听者的observeValueForKeyPath方法中。
 
-#### 11.**字典的原理？追问重复的key是怎么排列的？取的时候是怎么取的?**
+## 11.**字典的原理？追问重复的key是怎么排列的？取的时候是怎么取的?**
 一言以蔽之： 在OC中NSDictionary是使用hash表来实现key和value的映射和存储的。
 那么问题来了什么是hash表呢？
 哈希表（hash表）：又叫做散列表，是根据关键码值（key value）而直接访问的数据结构。也就是说它通过关键码值映射到表中一个位置来访问记录，以加快查找的速度。这个映射叫做函数，存放记录的数组叫做哈希表。
 
-#### 12.**layoutIfNeed 和 setNeedlayout有什么区别?**
+## 12.**layoutIfNeed 和 setNeedlayout有什么区别?**
 - **setNeedsLayout**
 标记为需要重新布局，异步调用layoutIfNeeded刷新布局，不立即刷新，在下一轮runloop结束前刷新，对于这一轮runloop之内的所有布局和UI上的更新只会刷新一次，layoutSubviews一定会被调用。
 - **layoutIfNeeded**
