@@ -95,12 +95,14 @@ disqus:
 # https://imsun.net/posts/gitment-introduction/
 # https://github.com/gitalk/gitalk#install
 gitment:
+    enable: true
     owner: LeeYouth
     repo: blog-comment
     oauth:
         client_id: d8d5c2458b7e327b3a41
         client_secret: 7380466e7ab07f2fb6b792c433e500c328b4e711
 gitalk:
+    enable: true
     owner: LeeYouth
     repo: blog-comment
     clientID: d8d5c2458b7e327b3a41
