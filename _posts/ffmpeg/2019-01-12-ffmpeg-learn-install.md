@@ -166,3 +166,5 @@ extern "C" {
 [VideoToolBox之视频编码](https://www.jianshu.com/p/06162a4731fb)
 
 [视频软解码和硬解码的区别](https://blog.csdn.net/qq_15807167/article/details/52262559)
+
+[iOS手动编译并搭建FFmpeg](https://juejin.im/post/5ceff73df265da1bb13f16f4)
