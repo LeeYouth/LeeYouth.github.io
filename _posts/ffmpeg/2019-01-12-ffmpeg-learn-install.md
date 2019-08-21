@@ -112,7 +112,6 @@ ARCHS="arm64 armv7 x86_64 i386"
 
 ```
 ./build-ffmpeg.sh
-
 ```
 
 3. 漫长等待之后生成三个文件夹,FFmpeg-iOS文件夹内的include与lib文件正是我们所需要
@@ -160,6 +159,9 @@ extern "C" {
 ----
 
 **推荐文章**
+
 [视频的基本参数及H264编解码相关概念](https://maxwellqi.github.io/ios-h264-summ/)
+
 [VideoToolBox之视频编码](https://www.jianshu.com/p/06162a4731fb)
+
 [视频软解码和硬解码的区别](https://blog.csdn.net/qq_15807167/article/details/52262559)
