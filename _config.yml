@@ -101,12 +101,7 @@ gitment:
     oauth:
         client_id: d8d5c2458b7e327b3a41
         client_secret: 7380466e7ab07f2fb6b792c433e500c328b4e711
-gitalk:
-    enable: true
-    owner: LeeYouth
-    repo: blog-comment
-    clientID: d8d5c2458b7e327b3a41
-    clientSecret: 7380466e7ab07f2fb6b792c433e500c328b4e711
+
 # 在使用其它评论组件时可点击显示 Disqus
 lazy_load_disqus : false
 
