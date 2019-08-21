@@ -16,9 +16,9 @@ iOS 集成FFmpeg
 | 类型      |    工具 |     硬件支持  |    后台 |    思路  |   
 | :-------- | --------:| :--: |
 | 硬编解码  | VideoToolBox |  非CPU或者专用处理器   | 支持编解码（H.264）   | VideoToolBox   |
-|   | AVAssetWriter |  非CPU或者专用处理器   | 支持编码     | 需要将视频写入本地文件，然后通过实时监听文件内容的改变，读取文件并处理封包       |
+|  ----  | AVAssetWriter |  非CPU或者专用处理器   | 支持编码     | 需要将视频写入本地文件，然后通过实时监听文件内容的改变，读取文件并处理封包       |
 
-| 软编解码  | FFmpeg |  CPU   | 支持（rtmp,flv,ts）   |    |
+| 软编解码  | FFmpeg |  CPU   | 支持（rtmp,flv,ts）   | ----   |
 
 ## Mac上安装FFmpeg环境
 
@@ -41,6 +41,7 @@ ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/
 **编译 iOS 下 FFmpeg**
 - **安装 [gas-preprocessor](https://github.com/bigsen/gas-preprocessor.git)**
 安装步骤(依次执行下面命令)
+
 ```
 sudo git clone https://github.com/bigsen/gas-preprocessor.git  /usr/local/bin/gas
 sudo cp /usr/local/bin/gas/gas-preprocessor.pl /usr/local/bin/gas-preprocessor.pl
@@ -52,6 +53,7 @@ sudo rm -rf /usr/local/bin/gas/
 - **安装 yams**
 > yasm是汇编编译器，因为ffmpeg中为了提高效率用到了汇编指令，所以编译时需要安装
 安装步骤(依次执行下面命令)
+
 ```
 curl http://www.tortall.net/projects/yasm/releases/yasm-1.2.0.tar.gz -o yasm-1.2.0.gz
 tar -zxvf yasm-1.2.0.gz
@@ -129,6 +131,7 @@ ARCHS="arm64 armv7 x86_64 i386"
 
 2. 拖拽进项目中刚才生成的FFmpeg-iOS文件到项目中。
 3. 设置Header Search Paths 路径，指向 项目中include目录 。
+
 ```
 $(SRCROOT)/FFmpeg_iOS/FFmpeg/include
 
