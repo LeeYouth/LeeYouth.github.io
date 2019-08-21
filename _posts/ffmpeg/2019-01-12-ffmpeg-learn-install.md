@@ -135,6 +135,7 @@ ARCHS="arm64 armv7 x86_64 i386"
 $(SRCROOT)/FFmpeg_iOS/FFmpeg/include
 
 ```
+
 4. 在项目中导入头文件,编译通过
 
 ```
