@@ -2,8 +2,7 @@
 #   Main Configs   #
 # ---------------- #
 baseurl: http://www.appcameras.com/
-# url: https://leeyouth.github.io
-url: http://www.appcameras.com
+url: https://leeyouth.github.io
 date_format: "ordinal"
 title: LYoung
 subtitle: "The night is dark and full of terrors."
