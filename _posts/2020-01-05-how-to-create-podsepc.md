@@ -73,6 +73,7 @@ TODO: Add long description of the pod here.
   s.dependency 'JGProgressHUD'
   s.dependency 'YYKit'
   s.dependency 'FMDB'
+end
 ```
 
 #### 6、 验证私有库是否有误:
