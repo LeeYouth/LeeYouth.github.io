@@ -1,4 +1,4 @@
-###创建私有库podspec及索引库specs
+### 创建私有库podspec及索引库specs
 - **创建索引库**
 - **创建私有仓库**
 - **验证私有仓库**
@@ -6,11 +6,11 @@
 - **推送私有库到索引库**
 - **项目使用私有库**
 
-####1、创建索引库mySpecs
+#### 1、创建索引库mySpecs
 ```
 pod repo add mySpecs https://github.com/leeyouth/mySpecs.git 
 ```
-####2、创建自己的私有仓库（任意位置）
+#### 2、创建自己的私有仓库（任意位置）
 1. 执行命令
 ```
 pod lib create LYNetworkKit
@@ -30,9 +30,9 @@ Would you like to do view based testing? [ Yes / No ]
 What is your class prefix?
  > ly
 ```
-3. 在Classes目录下添加你的库文件，删除replaceme.m。
-4. cd到Example目录下，如果依赖的有私有库，添加相应的私有库或索引库git，执行pod install验证是否有错。 (执行 pod update可选参数：--verbose 可以查看详细的过程 | --no-repo-update 不升级本地的repo会快一些)
-5. 编辑podspec文件
+#### 3、在Classes目录下添加你的库文件，删除replaceme.m。
+#### 4、cd到Example目录下，如果依赖的有私有库，添加相应的私有库或索引库git，执行pod install验证是否有错。 (执行 pod update可选参数：--verbose 可以查看详细的过程 | --no-repo-update 不升级本地的repo会快一些)
+#### 5、编辑podspec文件
 ```
 Pod::Spec.new do |s|
   s.name             = 'LYCommonKit'
@@ -67,7 +67,7 @@ TODO: Add long description of the pod here.
   s.dependency 'FMDB'
 ```
 
-6.  验证私有库是否有误:
+#### 6、 验证私有库是否有误:
 
 - 私有库不依赖私有库
 
@@ -78,7 +78,7 @@ pod lib lint --allow-warnings
 ```
 pod lib lint LYCommonUIKit.podspec --sources='https://github.com/LeeYouth/LY_MDSpecs.git,https://github.com/CocoaPods/Specs.git'  --allow-warnings
 ```
-7. 验证通过之后，将文件push到git仓库中：
+#### 7、验证通过之后，将文件push到git仓库中：
 ```
 git init
 git add .
@@ -92,13 +92,13 @@ git push origin master
 git tag '0.1.0'
 git push --tags
 ```
-8. 提交完成之后将podsepc添加到私有索引库中：
+#### 8、提交完成之后将podsepc添加到私有索引库中：
 ```
 # --verbose 可选
 pod repo push LY_MDSpecs LYCommonUIKit.podspec --allow-warnings
 ```
 
-9. 项目中使用私有库，podfile中添加如下：
+#### 9、项目中使用私有库，podfile中添加如下：
 ```
 source ‘https://github.com/CocoaPods/Specs.git’
 source ‘https://github.com/leeyouth/mySpecs.git ’
