@@ -41,7 +41,9 @@ What is your class prefix?
 3. 在Classes目录下添加你的库文件，删除replaceme.m。
 4. cd到Example目录下，如果依赖的有私有库，添加相应的私有库或索引库git，执行pod install验证是否有错。 (执行 pod update可选参数：--verbose 可以查看详细的过程。 --no-repo-update 不升级本地的repo会快一些)
 5. 编辑podspec文件
+
 ```
+
   s.name             = 'LYCommonKit'
   s.version          = '0.1.9'
   s.summary          = '通用组件，包含Toast，DBManager等.'
@@ -51,28 +53,26 @@ TODO: Add long description of the pod here.
                        DESC
 
   s.homepage         = 'https://github.com/LeeYouth/LYCommonKit'
-  # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'LeeYouth' => 'yuanliyong@jd.com' }
   s.source           = { :git => 'https://github.com/LeeYouth/LYCommonKit.git', :tag => s.version.to_s }
-  # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
   s.platform     = :ios, "11.0"
   s.ios.deployment_target = '8.0'
-  # 文件及子文件
+  //文件及子文件
   s.source_files = 'LYCommonKit/Classes/**/*'
 
-  # 暴露指定的头文件
-  # s.public_header_files = 'Pod/Classes/**/*.h'
-  # 依赖的系统库
+  //暴露指定的头文件
+  s.public_header_files = 'Pod/Classes/**/*.h'
+  //依赖的系统库
   s.frameworks =  'Foundation', 'UIKit', 'CoreData'
-  # 依赖的三方库
+  //依赖的三方库
   s.dependency 'AFNetworking'
   s.dependency 'MBProgressHUD'
   s.dependency 'JGProgressHUD'
   s.dependency 'YYKit'
   s.dependency 'FMDB'
-end
+
 ```
 
 #### 验证私有库是否有误:
@@ -102,7 +102,7 @@ git push --tags
 ```
 #### 提交完成之后将podsepc添加到私有索引库中：
 ```
-# --verbose 可选
+//--verbose 可选
 pod repo push LY_MDSpecs LYCommonUIKit.podspec --allow-warnings
 ```
 
