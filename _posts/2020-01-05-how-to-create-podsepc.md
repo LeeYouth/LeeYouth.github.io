@@ -39,10 +39,9 @@ What is your class prefix?
  > ly
 ```
 3. 在Classes目录下添加你的库文件，删除replaceme.m。
-4. cd到Example目录下，如果依赖的有私有库，添加相应的私有库或索引库git，执行pod install验证是否有错。 (执行 pod update可选参数：--verbose 可以查看详细的过程 | --no-repo-update 不升级本地的repo会快一些)
+4. cd到Example目录下，如果依赖的有私有库，添加相应的私有库或索引库git，执行pod install验证是否有错。 (执行 pod update可选参数：--verbose 可以查看详细的过程。 --no-repo-update 不升级本地的repo会快一些)
 5. 编辑podspec文件
 ```
-Pod::Spec.new do |s|
   s.name             = 'LYCommonKit'
   s.version          = '0.1.9'
   s.summary          = '通用组件，包含Toast，DBManager等.'
