@@ -1,3 +1,11 @@
+---
+layout: post
+title: pod私有库的创建、提交及使用
+categories: CocoaPods
+description: pod私有库的创建、提交及使用。
+keywords: CocoaPods, podsepc
+---
+
 ### 创建私有库podspec及索引库specs
 - **创建索引库**
 - **创建私有仓库**
