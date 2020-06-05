@@ -43,22 +43,6 @@ What is your class prefix?
 5. 编辑podspec文件
 
 ```
-
-  s.name             = 'LYCommonKit'
-  s.version          = '0.1.9'
-  s.summary          = '通用组件，包含Toast，DBManager等.'
-
-  s.description      = <<-DESC
-TODO: Add long description of the pod here.
-                       DESC
-
-  s.homepage         = 'https://github.com/LeeYouth/LYCommonKit'
-  s.license          = { :type => 'MIT', :file => 'LICENSE' }
-  s.author           = { 'LeeYouth' => 'yuanliyong@jd.com' }
-  s.source           = { :git => 'https://github.com/LeeYouth/LYCommonKit.git', :tag => s.version.to_s }
-
-  s.platform     = :ios, "11.0"
-  s.ios.deployment_target = '8.0'
   //文件及子文件
   s.source_files = 'LYCommonKit/Classes/**/*'
 
@@ -71,8 +55,6 @@ TODO: Add long description of the pod here.
   s.dependency 'MBProgressHUD'
   s.dependency 'JGProgressHUD'
   s.dependency 'YYKit'
-  s.dependency 'FMDB'
-
 ```
 
 #### 验证私有库是否有误:
